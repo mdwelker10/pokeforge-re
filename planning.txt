@@ -1,0 +1,43 @@
+PokeForge v2
+- Pull data from PokeAPI
+- Login with username/password (save with salt)
+- Use JWT auth
+- Login with Google maybe???
+- Or continue as guest
+- Create teams, download team JSON, delete teams, edit teams, export as showdown team
+  - Create teams per game (mainline only)
+  - Create teams using national dex (Use all moves, let user know all moves from all generations Pokemon has ever been able to learn included)
+
+- https://pokeapi.co/api/v2/pokemon
+    - Get list of all pokemon (not their data)
+    - limit 20 at a time
+    - Probably mass pull all names and put in a JSON with dex number
+
+- https://pokeapi.co/api/v2/pokemon/{Pokemon}
+  - Pokemon data
+  - data has array "moves" of all learnable moves - One array entry below
+    - Use version_group_details to make sure Pokemon gets that move in game where team is being made
+      - Like how all Pokemon used to have toxic but dont anymore
+    
+[{
+  "move": {
+      "name": "swords-dance",
+      "url": "https://pokeapi.co/api/v2/move/14/"
+  },
+  "version_group_details": [
+      {
+          "level_learned_at": 0,
+          "move_learn_method": {
+              "name": "machine",
+              "url": "https://pokeapi.co/api/v2/move-learn-method/4/"
+          },
+          "version_group": {
+              "name": "diamond-pearl",
+              "url": "https://pokeapi.co/api/v2/version-group/8/"
+          }
+          ...
+      }]
+}
+...
+]
+                
