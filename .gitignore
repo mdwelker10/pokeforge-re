@@ -3,7 +3,7 @@ logs
 npm-debug.log*
 pnpm-debug.log*
 
-node_modules
+**/node_modules/
 .DS_Store
 coverage
 *.local
@@ -18,4 +18,5 @@ coverage
 **/__pycache__/
 **/.venv/
 
-.env
+**/.env
+**/google_secret.json

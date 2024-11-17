@@ -22,10 +22,15 @@ export default ({ mode }) => {
       hmr: { clientPort: 3000 },
       timeout: 200000,
       proxyTimeout: 200000,
-      '/api': {
-        target: env.VITE_SERVER_PROXY,
-        headers: {
-          "Access-Control-Allow-Origin": ["*"] // CORS - Change for production
+      proxy: {
+        '/api': {
+          target: env['VITE_SERVER_PROXY'],
+          changeOrigin: true,
+          secure: false,
+          headers: {
+            "Access-Control-Allow-Origin": ["*"],
+          },
+          rewrite: (path) => path.replace(/^\/api/, '')
         }
       }
     }
