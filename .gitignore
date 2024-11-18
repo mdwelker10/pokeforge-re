@@ -19,4 +19,4 @@ coverage
 **/.venv/
 
 **/.env
-**/google_secret.json
+server/db/db-files/
