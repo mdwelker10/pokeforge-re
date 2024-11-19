@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify
-from routes.auth import login_required
+from server.utils.utils import login_required
 
 test_bp = Blueprint('test_bp', __name__)
 
 @test_bp.route('/', methods=['GET'])
 def hello_world():
-    return "Hello, World!"
+    return jsonify({'message': 'Hello, World!'}), 200
 
 
 @test_bp.route('/auth', methods=['GET'])

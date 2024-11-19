@@ -39,8 +39,7 @@ INSERT INTO `nature` (`name`, `increasestat`, `decreasestat`) VALUES
 CREATE TABLE IF NOT EXISTS `user` (
   `id` INTEGER PRIMARY KEY,
   `username` VARCHAR(32) NOT NULL UNIQUE CHECK (LENGTH(`username`) > 2),
-  `password` VARCHAR(256), --possibly update length later
-  `salt` VARCHAR(256) UNIQUE,
+  `password` VARCHAR(256),
   `googleid` VARCHAR(256) UNIQUE,
   `email` VARCHAR(256) UNIQUE,
   `createdat` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -87,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `pokemontypes` (
   FOREIGN KEY (`teratypeid`) REFERENCES `type`(`id`)
 );
 
-CREATE TABLE IF NOT EXISTS pokemon (
+CREATE TABLE IF NOT EXISTS `pokemon` (
   `id` INTEGER PRIMARY KEY,
   `name` VARCHAR(32) NOT NULL,
   `ability` VARCHAR(32),
@@ -97,6 +96,7 @@ CREATE TABLE IF NOT EXISTS pokemon (
   `movesetid` INTEGER NOT NULL,
   `pokemontypesid` INTEGER NOT NULL,
   `teamid` INTEGER NOT NULL,
+  `form` VARCHAR(16),
   `evs` VARCHAR(64), --- JSON object with keys hp, atk, def, spatk, spdef, spd
   `ivs` VARCHAR(64), --- JSON object with keys hp, atk, def, spatk, spdef, spd
   FOREIGN KEY (`natureid`) REFERENCES `nature`(`id`),
