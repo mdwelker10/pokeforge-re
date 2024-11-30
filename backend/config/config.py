@@ -7,6 +7,7 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' # TODO: Remove this line in prod
 
 # Set env variables to be accessed via the config object
 class Config:
+    DEV = True if os.getenv("DEV") == '1' else False
     # Non-secret variables
     JWT_ALGO='ES256'
     JSON_SORT_KEYS = False # Speed up jsonify

@@ -2,7 +2,7 @@ import traceback
 from functools import wraps
 from urllib.parse import unquote
 
-from flask import current_app, jsonify, request, session
+from flask import current_app, jsonify, request
 from server.routes.authentication.jwt import verify_jwt
 from server.utils.api_exception import APIException
 
@@ -14,11 +14,11 @@ def handle_api_errors(f):
       try:
           return f(*args, **kwargs)
       except APIException as e:
-          traceback.print_exc()
+          # traceback.print_exc() # remove for production
           return jsonify({'error': e.message}), e.code
       except Exception as e:
-          # TODO log properly
           traceback.print_exc()
+          current_app.logger.error(str(e))
           return jsonify({'error': 'An unexpected error occurred'}), 500
   return wrapper
 

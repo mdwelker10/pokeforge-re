@@ -40,7 +40,7 @@ def verify_jwt(token):
   except jwt.InvalidTokenError:
     raise APIException(401, 'Invalid token')
 
-# TODO idk how to implement refresh tokens properly and securely lol
+# idk how to implement refresh tokens properly and securely lol
 # def create_refresh_token(sub):
 #   """Create a refresh token that can be used to get a new access token without logging in again."""
 #   payload = {

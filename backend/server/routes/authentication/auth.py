@@ -6,7 +6,7 @@ from flask import (Blueprint, current_app, jsonify, make_response, redirect,
                    request, session, url_for)
 from server.data.dao.user_dao import create_user, google_login, validate_user
 from server.routes.authentication.jwt import create_jwt
-from server.utils.utils import handle_api_errors
+from server.utils.utils import handle_api_errors, login_required
 
 # Blueprint for authentication routes
 auth_bp = Blueprint('auth_bp', __name__)
@@ -38,8 +38,8 @@ def register():
   create_user(data['username'], data['password'])
   return redirect('http://localhost:3000') # TODO replace with login page
 
-@auth_bp.route('/login', methods=['POST', 'GET'])
 @handle_api_errors
+@auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
   """Route for logging in. Use ?next=/path to redirect after login, if not set goes to homepage by default. 
      Use ?method=google to login with Google.
@@ -99,8 +99,10 @@ def callback():
 
 @handle_api_errors
 @auth_bp.route('/logout', methods=['GET'])
+@login_required
 def logout():
   """Route for logging out. Clears session and JWT cookie. Takes user back to the home page even if on a non-protected page."""
+  current_app.logger.info('User %s logged out', request.user)
   response = redirect(HOMEPAGE)
   response.delete_cookie(current_app.config['JWT_COOKIE_NAME'])
   session.clear()

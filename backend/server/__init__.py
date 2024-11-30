@@ -1,4 +1,5 @@
 from config.config import Config
+from config.logging import configure_logger
 from flask import Flask
 from flask_cors import CORS
 
@@ -10,6 +11,11 @@ def create_app():
     app.config.from_object(Config)
 
     app.secret_key = app.config['FLASK_SECRET'] # For session management
+
+    # Set up custom logger
+    logger = configure_logger(app.config['DEV']) 
+    app.logger.handlers = logger.handlers
+    app.logger.setLevel(logger.level)
 
     # Import and register blueprints
     from server.routes.authentication.auth import auth_bp, init_oauth

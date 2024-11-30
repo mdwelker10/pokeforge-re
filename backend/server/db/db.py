@@ -1,6 +1,8 @@
 import os
 import sqlite3
 
+from flask import current_app
+
 
 # Use this method in other classes for transactions
 def connect():
@@ -38,6 +40,7 @@ def exec(query, data, attribute):
     # Allows testing of db separate from rest of app
     if __name__ != '__main__':
       from server.utils.api_exception import APIException
+      current_app.logger.error(f"Database error: {e}")
       raise APIException(500, 'Internal database error')
     else:
       import traceback
